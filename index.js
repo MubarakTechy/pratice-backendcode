@@ -19,93 +19,91 @@
 
 
 
-const express = require('express');
-const app = express();
-PORT = 4000, 
+// const express = require('express');
+// const app = express();
+// PORT = 4000, 
 
 
-app.get('/',(req, res)=>{
-    res.send('this is not at home paage');
-});
+// app.get('/',(req, res)=>{
+//     res.send('this is not at home paage');
+// });
 
-app.get('/about',(req,res)=>(
-    res.send('about page is required in this page')
-));
+// app.get('/about',(req,res)=>(
+//     res.send('about page is required in this page')
+// ));
 
-app.get('/service',(req,res)=>{
-    res.send('this is a service page is required in this page');
-});
+// app.get('/service',(req,res)=>{
+//     res.send('this is a service page is required in this page');
+// });
 
-app.get('/blog',(req,res)=>{
-    res.send('blog page is importance')
-});
+// app.get('/blog',(req,res)=>{
+//     res.send('blog page is importance')
+// });
 
-app.get('/aboutme',(req,res)=>{
-    res.send('aboutme page in required');
-});
+// app.get('/aboutme',(req,res)=>{
+//     res.send('aboutme page in required');
+// });
 
-app.get('/main',(req,res)=>{
-    res.send('main is required')
-});
+// app.get('/main',(req,res)=>{
+//     res.send('main is required')
+// });
+// app.get('/landing',(req,res)=>{
+//     res.send('landing page is different from sale landing page ')
+// });
 
+// app.get('/maker',(req,res)=>{
+//     res.send('sef')
+// });
 
-app.get('/landing',(req,res)=>{
-    res.send('landing page is different from sale landing page ')
-});
-
-app.get('/maker',(req,res)=>{
-    res.send('sef')
-});
-
-app.get('/mobile',(req,res)=>{
-    res.send('state value of the amount of money ')
-});
+// app.get('/mobile',(req,res)=>{
+//     res.send('state value of the amount of money ')
+// });
 
 
-app.post('/state',(req,res)=>{
-    const data = {
-        name:'mkPunk',
-        age: 25,
-        city: 'New York'
-    }
-    res.status(200).json({data})
+// app.post('/state',(req,res)=>{
+//     const data = {
+//         name:'mkPunk',
+//         age: 25,
+//         city: 'New York'
+//     }
+//     res.status(200).json({data})
 
-});
+// });
 
-app.post('/mark',(req,res)=>{
-    const main = {
-        name: 'punk',
-        NIN: 56891975206,
-        BVN: 783902020379,
-        age: 30,
-        city: "london "
-    }
-    res.status(200).json({main});
-});
+// app.post('/mark',(req,res)=>{
+//     const main = {
+//         name: 'punk',
+//         NIN: 56891975206,
+//         BVN: 783902020379,
+//         age: 30,
+//         city: "london "
+//     }
+//     res.status(200).json({main});
+// });
 
 
 
 
-app.post('/register',(req,res)=>{
-     const user ={
-         name: 'punk',
-         age: 25,
-         city: 'New York',
-         email: 'punk@gmail.com'
-     }
-     res.status(200).json({user});
-});
+// app.post('/register',(req,res)=>{
+//      const user ={
+//          name: 'punk',
+//          age: 25,
+//          city: 'New York',
+//          email: 'punk@gmail.com'
+//      }
+//      res.status(200).json({user});
+// });
 
 
 
-app.get('/or',(req,res)=>{
-    res.send('maaaaaaa ammama')
-})
+// app.get('/or',(req,res)=>{
+//     res.send('maaaaaaa ammama')
+// })
 
 
-app.get('/home/about',(req,res)=>{
-    res.send('you are in the homepage and about page')
-});
+// app.get('/home/about',(req,res)=>{
+//     res.send('you are in the homepage and about page')
+// });
 
 // app.listen(4000,(res,req)=>{
 //     console.log('running punk port 4000'); 
@@ -143,3 +141,69 @@ app.get('/home/about',(req,res)=>{
 // app.listen(4000, (req,res)=>{
 //     console.log('Server running punk on port 4000')
 // })
+
+
+const express = require('express')
+const app = express()
+app.use(express.json());
+
+
+const todos = [
+    {id:1, text:'main text', completed:false},
+    {id:2, text:'text', completed:false},
+    {id:3, text:'gchfdfncnx', completed:false}
+]
+// app.get('/',(req,res)=>{
+//    if (todos) {
+//     return res.status(200).json({status:'sucesss',data:todos})
+//    }
+//    res.status(401).json({status:'error',message:'todos not found'})
+// });
+
+
+
+app.get('/',(req,res)=>{
+    if(todos){
+     return res.status(200).json({status:"successful",data:todos});
+    }
+     res.status(401).json({status:"error", Message:"page todo not found"});
+})
+
+
+
+
+app.post('/add',(req,res)=>{
+    const {text} = req.body;
+
+    if (!text) {
+        return res.status(404).json({status:'error', massage: "not found" })
+    }
+    const newData = {
+        id:todos.length +1,
+        text,
+        completed: false,
+    }
+    res.status(200).json({status:'sucesss',newData})
+});
+
+
+app.patch('/editor/:id',(req,res)=>{
+
+    const {id} = res.params;
+    const {text, completed} = req.body;
+
+    const todo = todos.find((todo)=> todo.id === parseInt(id));
+    
+    if(!todo){
+       res
+    }
+});
+
+
+
+app.listen(8000,()=>{
+    console.log('running server punk 4000 port ');
+    
+});
+
+
