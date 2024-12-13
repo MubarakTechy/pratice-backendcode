@@ -149,9 +149,9 @@ app.use(express.json());
 
 
 const todos = [
-    {id:1, text:'main text', completed:false},
-    {id:2, text:'text', completed:false},
-    {id:3, text:'gchfdfncnx', completed:false}
+    {id:1, name:'main text', completed:false},
+    {id:2, name:'text', completed:false},
+    {id:3, name:'gchfdfncnx', completed:false}
 ]
 // app.get('/',(req,res)=>{
 //    if (todos) {
@@ -189,17 +189,30 @@ app.post('/add',(req,res)=>{
 
 app.patch('/editor/:id',(req,res)=>{
 
-    const {id} = res.params;
-    const {text, completed} = req.body;
+    const {id} = req.params;
+    const {name, completed} = req.body;
 
     const todo = todos.find((todo)=> todo.id === parseInt(id));
     
     if(!todo){
-       res
-    }
+       return res.status(404).json({success:false, message:'todo not fond '})
+    };
+
+    if(name != undefined) todo.name = name;
+    if(completed != undefined)todo.completed = completed
+    
+    res.status(200).json({success:true, data:todo})
 });
 
 
+app.delete('/main/:id',(req,res)=>{
+    const {id} = req.params;
+    const todo = todos.filter(td => td.id !== parseInt(id))
+    if(!todo){
+        return res.status(404).json({success:false, message:'todo not found '})
+    }
+    res.status(200).json({success:true, data:todo})
+} )
 
 app.listen(8000,()=>{
     console.log('running server punk 4000 port ');
