@@ -214,6 +214,8 @@
 //     res.status(200).json({success:true, data:todo})
 // } )
 
+
+
 // app.listen(8000,()=>{
 //     console.log('running server punk 4000 port');
     
@@ -270,20 +272,25 @@ app.patch('/api/:id',(req,res)=>{
         if(completed != undefined)todo.completed = completed
         
         res.status(200).json({success:true, data:todo})
-
-
 });
 
+app.delete('/ap1/:id',(req,res)=>{
+
+    const {id} = req.params;
+    const todo = todos.filter(td => td.id !== parseInt(id))
+    if(!todo){
+        return res.status(404).json({success:false, message:'todo not found '})
+    }
+    res.status(200).json({success:true, data:todo})
 
 
-
-
+})
 
 
 
 
 app.listen(9000,()=>{
-    console.log('runing my server 8000'); 
+    console.log('runing my server 9000'); 
 });
 
 
