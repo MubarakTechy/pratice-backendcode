@@ -143,154 +143,89 @@
 // })
 
 
-// const express = require('express')
-// const app = express()
-// app.use(express.json());
-
-
-// const todos = [
-//     {id:1, name:'main text', completed:false},
-//     {id:2, name:'text', completed:false},
-//     {id:3, name:'gchfdfncnx', completed:false}
-// ]
-// // app.get('/',(req,res)=>{
-// //    if (todos) {
-// //     return res.status(200).json({status:'sucesss',data:todos})
-// //   }
-// //    res.status(401).json({status:'error',message:'todos not found'})
-// // });
-
-
-
-// app.get('/',(req,res)=>{
-//     if(todos){
-//      return res.status(200).json({status:"successful",data:todos});
-//     }
-//      res.status(401).json({status:"error", Message:"page todo not found"});
-// })
-
-
-
-
-// app.post('/add',(req,res)=>{
-//     const {text} = req.body;
-
-//     if (!text) {
-//         return res.status(404).json({status:'error', massage: "not found" })
-//     }
-//     const newData = {
-//         id:todos.length +1,
-//         text,
-//         completed: false,
-//     }
-//     res.status(200).json({status:'sucesss',newData})
-// });
-
-
-// app.patch('/editor/:id',(req,res)=>{
-
-//     const {id} = req.params;
-//     const {name, completed} = req.body;
-
-//     const todo = todos.find((todo)=> todo.id === parseInt(id));
-    
-//     if(!todo){
-//        return res.status(404).json({success:false, message:'todo not fond '})
-//     };
-
-//     if(name != undefined) todo.name = name;
-//     if(completed != undefined)todo.completed = completed
-    
-//     res.status(200).json({success:true, data:todo})
-// });
-
-
-// app.delete('/main/:id',(req,res)=>{
-//     const {id} = req.params;
-//     const todo = todos.filter(td => td.id !== parseInt(id))
-//     if(!todo){
-//         return res.status(404).json({success:false, message:'todo not found '})
-//     }
-//     res.status(200).json({success:true, data:todo})
-// } )
-
-
-
-// app.listen(8000,()=>{
-//     console.log('running server punk 4000 port');
-    
-// });
-
-
-const express = require('express');
-const app =  express();
+const express = require('express')
+const app = express()
 app.use(express.json());
 
-const todo = [
-    {id:1, name:'abdulbasit', email:'abdulbasit@gmail.com', password:'12345bnm,6', completed:false},
-    {id:2, name:'yaya', email:'yaya@gmail.com', password:'12345bnm,6', completed:false},
-    {id:3, name:'tolu', email:'tolu@gmail.com', password:'dgdhds663', completed:false},
-    {id:4, name:'bolu', email:'bolu@gmail.com', password:'ujfdf5433', completed:false},
-    {id:5, name:'malik', email:'malik@gmail.com', password:'nfmffj5434', completed:false,},
-];
+
+const todos = [
+    {id:1, name:'main text', completed:false},
+    {id:2, name:'text', completed:false},
+    {id:3, name:'gchfdfncnx', completed:false}
+]
+// app.get('/',(req,res)=>{
+//    if (todos) {
+//     return res.status(200).json({status:'sucesss',data:todos})
+//    }
+//    res.status(401).json({status:'error',message:'todos not found'})
+// });
+
+
 
 app.get('/',(req,res)=>{
-    if (todo) {
-        res.status(200).json({status:"successful", data:todo});
-    };
-    res.status(400).json({status:"erorr", message:' todo not found'});
-});
+    if(todos){
+     return res.status(200).json({status:"successful",data:todos});
+    }
+     res.status(401).json({status:"error", Message:"page todo not found"});
+})
 
 
-app.post('/api',(req,res)=>{
-    const { password} = req.body;
-      if (!password) {
-        res.status(404).json({success: false, message:'not found'});
-      };
+
+
+app.post('/add',(req,res)=>{
+    const {name} = req.body;
+
+    if (!name) {
+        return res.status(404).json({status:'error', massage: "not found" })
+    }
+    const newData = {
+        id:todos.length +1,
+        text,
+        completed: false,
+    }
+    res.status(200).json({status:'sucesss',newData})
+
     
-     const newData = {
-        id:todo.length +1,
-        email,
-        password,
-        completed: false
-     } 
-     res.status(200).json({status:"sucessful", newData});
+    const {body} = request;
+    console.log(req.body);
+    const newUser = { id:mockUser[mockUse.length -1].id + 1, ...body}
+    mockUser.push(newUser);
+
+    return  res.status(201).send(newUser);
 });
 
-app.patch('/api/:id',(req,res)=>{
+
+app.patch('/editor/:id',(req,res)=>{
 
     const {id} = req.params;
-        const {name, completed} = req.body;
+    const {name, completed} = req.body;
+
+    const todo = todos.find((todo)=> todo.id === parseInt(id));
     
-        const todo = todos.find((todo)=> todo.id === parseInt(id));
-        
-        if(!todo){
-           return res.status(404).json({success:false, message:'todo not fond '})
-        };
+    if(!todo){
+       return res.status(404).json({success:false, message:'todo not fond '})
+    };
+
+    if(name != undefined) todo.name = name;
+    if(completed != undefined)todo.completed = completed
     
-        if(name != undefined) todo.name = name;
-        if(completed != undefined)todo.completed = completed
-        
-        res.status(200).json({success:true, data:todo})
+    res.status(200).json({success:true, data:todo})
 });
 
-app.delete('/ap1/:id',(req,res)=>{
 
+
+app.delete('/main/:id',(req,res)=>{
     const {id} = req.params;
     const todo = todos.filter(td => td.id !== parseInt(id))
     if(!todo){
         return res.status(404).json({success:false, message:'todo not found '})
     }
     res.status(200).json({success:true, data:todo})
+} )
 
-
-})
-
-
-
-
-app.listen(9000,()=>{
-    console.log('runing my server 9000'); 
+app.listen(8000,()=>{
+    console.log('running server punk 8000 port ');
+    
 });
 
 
