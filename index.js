@@ -183,14 +183,7 @@ app.post('/add',(req,res)=>{
         text,
         completed: false,
     }
-    res.status(200).json({status:'sucesss',newData})
-
-    
-    const {body} = request;
-    console.log(req.body);
-    const newUser = { id:mockUser[mockUse.length -1].id + 1, ...body}
-    mockUser.push(newUser);
-
+    res.status(200).json({status:'sucesss',newData});
     return  res.status(201).send(newUser);
 });
 
@@ -221,7 +214,17 @@ app.delete('/main/:id',(req,res)=>{
         return res.status(404).json({success:false, message:'todo not found '})
     }
     res.status(200).json({success:true, data:todo})
-} )
+});
+app.get('/',(req, res)=>{
+    const todo ={
+        name: 'punk',
+        id:'20',
+        completed: false
+    }
+    res.status(200).json({todo})
+});
+
+
 
 app.listen(8000,()=>{
     console.log('running server punk 8000 port ');
